@@ -27,7 +27,15 @@ class LongosItem(scrapy.Item):
     storeName = scrapy.Field(output_processor = TakeFirst())
 
 class ZehrsItem(scrapy.Item):
-    itemName = scrapy.Field()
-    itemPrice = scrapy.Field()
-    itemWeight = scrapy.Field()
-    storeName = scrapy.Field()
+    itemName = scrapy.Field(output_processor = TakeFirst())
+    itemPrice = scrapy.Field(input_processor = MapCompose(currencyChange), output_processor = TakeFirst())
+    itemPricePerWeight = scrapy.Field(input_processor = MapCompose(currencyChange), output_processor = TakeFirst())
+    itemMeasurement = scrapy.Field(input_processor = MapCompose(cleanWeight), output_processor = TakeFirst())
+    storeName = scrapy.Field(output_processor = TakeFirst())
+
+class NofrillsItem(scrapy.Item):
+    itemName = scrapy.Field(output_processor = TakeFirst())
+    itemPrice = scrapy.Field(input_processor = MapCompose(currencyChange), output_processor = TakeFirst())
+    itemPricePerWeight = scrapy.Field(input_processor = MapCompose(currencyChange), output_processor = TakeFirst())
+    itemMeasurement = scrapy.Field(input_processor = MapCompose(cleanWeight), output_processor = TakeFirst())
+    storeName = scrapy.Field(output_processor = TakeFirst())

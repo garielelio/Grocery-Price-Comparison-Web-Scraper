@@ -1,19 +1,19 @@
 import scrapy
 from scrapy_playwright.page import PageMethod
-from webscrape.items import ZehrsItem
+from webscrape.items import NofrillsItem
 from scrapy.loader import ItemLoader
 
-#Spider class for Zehrs
-class ZehrsspiderSpider(scrapy.Spider):
-    name = "zehrsspider"
-    allowed_domains = ["zehrs.ca"]
-    start_urls = ["http://zehrs.ca/"]
+#Spider class for Nofrills
+class NofrillsspiderSpider(scrapy.Spider):
+    name = "nofrillsspider"
+    allowed_domains = ["nofrills.ca"]
+    start_urls = ["http://nofrills.ca/"]
 
-    #Request to open the webpage
+    #Request to open the page
     def start_requests(self):
-        url = 'https://www.zehrs.ca/search?search-bar=fish' #MODIFY LATER FOR USER INPUT ========
+        url = 'https://www.nofrills.ca/search?search-bar=fish' #MODIFY LATER FOR USER INPUT ===========
 
-        #Waiting for the page to load
+        #Wait for the page to load
         yield scrapy.Request(url, meta=dict(
             playwright = True,
             playwright_include_page = True,
@@ -23,13 +23,11 @@ class ZehrsspiderSpider(scrapy.Spider):
             errback = self.errback
         ))
 
-    #Parse function for the data
+    #Parsing the data
     def parse(self, response):
-        
         items = response.css('div.product-tile__details__info')
 
         for item in items:
-            
             brandName = item.css('span.product-name__item.product-name__item--brand::text').get()
             productName = item.css('span.product-name__item.product-name__item--name::text').get()
 
@@ -38,17 +36,19 @@ class ZehrsspiderSpider(scrapy.Spider):
             else:
                 outputName = str(brandName) + ", " + str(productName)
 
-            load = ItemLoader(item=ZehrsItem(), selector=item)
+            #Putting the data
+            load = ItemLoader(item = NofrillsItem(), selector=item)
 
             load.add_value('itemName', outputName)
             load.add_css('itemPrice', 'span.price__value.selling-price-list__item__price.selling-price-list__item__price--now-price__value::text')
             load.add_css('itemPricePerWeight', 'span.price__value.comparison-price-list__item__price__value::text')
             load.add_css('itemMeasurement', 'span.price__unit.comparison-price-list__item__price__unit::text')
-            load.add_value('storeName', 'Zehrs')
+            load.add_value('storeName','Nofrills')
 
             yield load.load_item()
 
+
     #Error response
     async def errback(self, failure):
-         page = failure.request.meta["playwright_page"]
-         await page.close()
+        page = failure.request.meta["playwright_page"]
+        await page.close()
