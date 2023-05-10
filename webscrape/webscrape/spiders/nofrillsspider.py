@@ -6,12 +6,22 @@ from scrapy.loader import ItemLoader
 #Spider class for Nofrills
 class NofrillsspiderSpider(scrapy.Spider):
     name = "nofrillsspider"
+    custom_settings = {
+        'ITEM_PIPELINES' : {
+            'webscrape.pipelines.PipelineTwo' : 300,
+        }
+    }
     allowed_domains = ["nofrills.ca"]
-    start_urls = ["http://nofrills.ca/"]
+    #start_urls = ["http://nofrills.ca/"]
+
+    def __init__(self, domain, *args, **kwargs):
+        super(NofrillsspiderSpider, self).__init__(*args, **kwargs)
+        self.start_urls = [f'https://www.nofrills.ca/search?search-bar={domain}'] if domain else []
 
     #Request to open the page
     def start_requests(self):
-        url = 'https://www.nofrills.ca/search?search-bar=fish' #MODIFY LATER FOR USER INPUT ===========
+        #url = 'https://www.nofrills.ca/search?search-bar=fish' #MODIFY LATER FOR USER INPUT ===========
+        url = self.start_urls[0]
 
         #Wait for the page to load
         yield scrapy.Request(url, meta=dict(

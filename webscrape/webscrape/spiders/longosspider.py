@@ -6,12 +6,22 @@ from scrapy.loader import ItemLoader
 #Spider class for Longos
 class LongosspiderSpider(scrapy.Spider):
     name = "longosspider"
+    custom_settings = {
+        'ITEM_PIPELINES' : {
+            'webscrape.pipelines.PipelineOne' : 300,
+        }
+    }
     allowed_domains = ["longos.com"]
-    start_urls = ["http://longos.com/"]
+    #start_urls = ["http://longos.com/"]
+
+    def __init__(self, domain, *args, **kwargs):
+        super(LongosspiderSpider, self).__init__(*args, **kwargs)
+        self.start_urls = [f'https://www.longos.com/search/{domain}?q={domain}'] if domain else []
 
     #Request to open the webpage
     def start_requests(self):
-        url = 'https://www.longos.com/search/fish?q=fish' #MODIFY LATER FOR USER INPUT ========
+        #url = 'https://www.longos.com/search/fish?q=fish' #MODIFY LATER FOR USER INPUT ========
+        url = self.start_urls[0]
         yield scrapy.Request(url, meta={'playwright': True})
 
     #Parsing the webpage
