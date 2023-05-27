@@ -2,6 +2,6 @@
 
 Project in Progress!
 
-## Future improvements 📈
-- Create a front-end for a web application using React
-- Create a back-end for a web application using NodeJS
+## Improvements currenty working on 📈
+- Creating a front-end for a web application using React
+- Creating a back-end for a web application using Node.js and Express.js

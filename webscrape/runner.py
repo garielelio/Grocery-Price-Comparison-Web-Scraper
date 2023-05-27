@@ -9,9 +9,9 @@ import os
 def run():
     settings = get_project_settings()
     process = CrawlerProcess(settings)
-    process.crawl(NofrillsspiderSpider, domain='fish')
-    process.crawl(ZehrsspiderSpider, domain='fish')
-    process.crawl(LongosspiderSpider, domain='fish')
+    process.crawl(NofrillsspiderSpider, domain='chicken')
+    process.crawl(ZehrsspiderSpider, domain='chicken')
+    process.crawl(LongosspiderSpider, domain='chicken')
     process.start()
 
 def createDatabase():
