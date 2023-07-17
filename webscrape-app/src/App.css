@@ -107,7 +107,7 @@ body{
   border-radius: 40px;
   border: 0;
   background-color: #DADBDD;
-  margin-right: 1%;
+  margin-right: 6px;
   transition: background-color 0.12s ease-in-out;
 }
 
@@ -161,6 +161,7 @@ body{
   position: relative;
   right: 15px;
   font-size: 16px;
+  height: 35px;
   width: 70px;
   background-color: #DADBDD;
   border: 0;
@@ -168,4 +169,37 @@ body{
   transition: background-color 0.12s ease-in-out;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bold;
+}
+
+.result-container{
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
+  display: grid;
+  gap: 20px
+}
+
+@media (min-width: 40em) {
+  .result-container{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 60em) {
+  .result-container{
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.item-card{
+  background-color: white;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative
+}
+
+.price{
+  font-size: larger;
 }
